@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+    {{ product.description|truncatewords:155 }}
+{% endblock %}
+{% block title %}
+    {{ product.name }} - PlantLovers.in
+{% endblock %}
+{% block content %}
+    <div class="row my_prod_row_class">
+        <div class="mx-auto">
+            <p><a href="{% url 'shopapp:allPodCat' %}">Home</a> | <a href="{{ product.category.get_url }}">{{product.category}}</a> | {{product.name}}</p>
+        </div>
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-ml-12 col-lg-6 text-center">
+                    <div class="card" style="width: 18rem; margin: 10px">
+                        <img src="{{product.image.url}}" alt="{{product.name}}">
+                    </div>
+                </div>
+<!--                        class="col-12 col-sm-12 col-md-12 col-lg-6">-->
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                   <div>
+                        <h5 class="card-title"></h5><b>{{product.name}}</b></h5><br>
+                        <p style="color:green;"><b>₹{{product.price}}</b></p>
+                        <p class="card-text"><b>Product Description:</b><br>{{product.description}}</p>
+<!--                        <p class="text-justify my_prod_text">{{product.description}}</p>-->
+                        {% if product.stock <= 0%}
+                            <p class="text-justify my_prod_text"><b>Out of Stock</b></p>
+                        {% else %}
+                            <a class="btn btn-success" href="{% url 'cart:add_cart' product.id %}">Add to Cart</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
